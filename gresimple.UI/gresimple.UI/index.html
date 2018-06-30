@@ -10,8 +10,16 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     <title>Hello, world!</title>
+
+    <style>
+        .cardback {
+            display: none;
+        }
+        
+    </style>
 </head>
 <body>
+    <!-- Main Nav Bar-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Simple GRE</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,8 +56,10 @@
         </div>
     </nav>
 
-    <h1>Hello, world!</h1>
-
+    <br />
+    <div id="wordplaceholder"></div>
+    <br />
+    
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -57,5 +67,47 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+
+    <script>
+        $(function () {
+            wordData = [{ word: "A", def: "ADEF" },
+                { word: "B", def: "BDEF" },
+                { word: "C", def: "CDEF" },
+                { word: "D", def: "DDEF" },
+                { word: "E", def: "EDEF" },
+                { word: "F", def: "FDEF" }];
+
+            var count = wordData.count;
+
+            $('#wordplaceholder').append("<div id='wordplaceholder-r1' class='card-deck'></div>");
+            $('#wordplaceholder').append("<div id='wordplaceholder-r2' class='card-deck'></div>");
+
+            wordData.forEach((w, i) => {
+                
+                var cardTemplate = "<div class='card text-white bg-dark mb-3'>" +
+                    "<div class='card-body'>" +
+                    "<div class='cardfront'>" +
+                    "<center><h5 class='card-title'>" + w.word + "</h5></center>" +
+                    "</div>" +
+                    "<div class='cardback'>" +
+                    "<center><h5 class='card-title'>" + w.def + "</h5></center>" +
+                    "</div>" +
+                    "</div>"+
+                    "</div>";
+
+                if (i < 3) {
+                    $('#wordplaceholder-r1').append(cardTemplate);
+                }
+                else {
+                    $('#wordplaceholder-r2').append(cardTemplate);
+                }
+            });
+
+            $('.card').click(function () {
+                $(this).find('.cardfront').toggle();
+                $(this).find('.cardback').toggle();
+            });
+        });
+    </script>
 </body>
 </html>
