@@ -49,11 +49,11 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown
+                        GRE Lists
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" id="alllist" href="#">All</a>
+                        <a class="dropdown-item" id="mylist" href="#">Frankenstein</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">Something else here</a>
                     </div>
@@ -88,7 +88,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.3/pagination.min.js"></script>
 
     <script>
+        
         $(function () {
+            $('#alllist').click(function () {
+                LoadAll();                
+            });
+
+            $('#mylist').click(function () {
+                LoadFrankenstein();
+            });            
+
             //wordData = [{ word: "A", def: "ADEF" },
             //{ word: "B", def: "BDEF" },
             //{ word: "C", def: "CDEF" },
@@ -106,35 +115,48 @@
 
             var wordData = [];
 
-            //$.getJSON("http://localhost:57882/api/grewords", function (data) {
-            $.getJSON("https://gresimplewebapi.azurewebsites.net/api/grewords", function (data) {
-                //data.forEach((val, i) => {
-                //    wordData.push(val);
-                //});
-                $.each(data, function (key, val) {
-                    wordData.push(val);
-                });
-            })
-                .done(function () {
-                    console.log("second success");
-                    var count = wordData.count;
+            //LoadPagination("http://localhost:57882/api/grewords");
+            LoadAll();
 
-                    $('#paginationplaceholder').pagination({
-                        dataSource: wordData,
-                        pageSize: 6,
-                        callback: function (data, pagination) {
-                            DisplayWords(data);
-                        }
+            function LoadAll() {
+                LoadPagination("https://gresimplewebapi.azurewebsites.net/api/grewords");
+            }
+
+            function LoadFrankenstein() {
+                LoadPagination("https://gresimplewebapi.azurewebsites.net/api/grelistviews");
+            }
+
+            function LoadPagination(url) {
+                wordData = [];
+                
+                $.getJSON(url, function (data) {
+                    //data.forEach((val, i) => {
+                    //    wordData.push(val);
+                    //});
+                    $.each(data, function (key, val) {
+                        wordData.push(val);
                     });
                 })
-                .fail(function () {
-                    console.log("error");
-                })
-                .always(function () {
-                    console.log("finished");
-                });
+                    .done(function () {
+                        console.log("second success");
+                        var count = wordData.count;
 
-            
+                        $('#paginationplaceholder').pagination({
+                            dataSource: wordData,
+                            pageSize: 6,
+                            className: 'paginationjs-big',
+                            callback: function (data, pagination) {
+                                DisplayWords(data);
+                            }
+                        });
+                    })
+                    .fail(function () {
+                        console.log("error");
+                    })
+                    .always(function () {
+                        console.log("finished");
+                    });
+            }
 
             function DisplayWords(wordsToDisplay) {
                 $('#wordplaceholder-r1').empty();
