@@ -18,6 +18,7 @@ namespace Data.gresimple.Model
         public virtual DbSet<Grelists> Grelists { get; set; }
         public virtual DbSet<Greusers> Greusers { get; set; }
         public virtual DbSet<Grewords> Grewords { get; set; }
+        public virtual DbSet<Grelistview> Grelistview { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -55,6 +56,19 @@ namespace Data.gresimple.Model
                 entity.Property(e => e.Type).IsUnicode(false);
 
                 entity.Property(e => e.Word).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Grelistview>(entity =>
+            {
+                entity.Property(e => e.Email).IsUnicode(false);
+
+                entity.Property(e => e.ListName).IsUnicode(false);
+
+                entity.Property(e => e.Word).IsUnicode(false);
+
+                entity.Property(e => e.Type).IsUnicode(false);
+
+                entity.Property(e => e.Definition).IsUnicode(false);
             });
         }
     }
