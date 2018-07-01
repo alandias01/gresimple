@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gresimple.WebApi", "gresimple.WebApi\gresimple.WebApi.csproj", "{6F31A237-13DF-4841-A88C-E0CFF63EA21A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gresimple.WebApi", "gresimple.WebApi\gresimple.WebApi.csproj", "{6F31A237-13DF-4841-A88C-E0CFF63EA21A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.gresimple", "..\Data.gresimple\Data.gresimple\Data.gresimple.csproj", "{70F616A5-7BB3-493B-B667-28E171ABFB6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{6F31A237-13DF-4841-A88C-E0CFF63EA21A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F31A237-13DF-4841-A88C-E0CFF63EA21A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F31A237-13DF-4841-A88C-E0CFF63EA21A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70F616A5-7BB3-493B-B667-28E171ABFB6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70F616A5-7BB3-493B-B667-28E171ABFB6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70F616A5-7BB3-493B-B667-28E171ABFB6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70F616A5-7BB3-493B-B667-28E171ABFB6E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
