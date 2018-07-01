@@ -13,6 +13,14 @@
     <title>Hello, world!</title>
 
     <style>
+        .card-deck {
+            margin-bottom:15px;
+        }
+        .card {
+            max-width: 350px;
+            min-height: 150px;            
+        }
+        
         .cardback {
             display: none;
         }
@@ -72,7 +80,7 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
@@ -81,31 +89,52 @@
 
     <script>
         $(function () {
-            wordData = [{ word: "A", def: "ADEF" },
-            { word: "B", def: "BDEF" },
-            { word: "C", def: "CDEF" },
-            { word: "D", def: "DDEF" },
-            { word: "E", def: "EDEF" },
-            { word: "F", def: "FDEF" },
-            { word: "G", def: "GDEF" },
-            { word: "H", def: "HDEF" },
-            { word: "I", def: "IDEF" }];
-
-            var count = wordData.count;
-
+            //wordData = [{ word: "A", def: "ADEF" },
+            //{ word: "B", def: "BDEF" },
+            //{ word: "C", def: "CDEF" },
+            //{ word: "D", def: "DDEF" },
+            //{ word: "E", def: "EDEF" },
+            //{ word: "F", def: "FDEF" },
+            //{ word: "G", def: "GDEF" },
+            //{ word: "H", def: "HDEF" },
+            //{ word: "I", def: "IDEF" }];
+            
             $('#wordplaceholder').append("<div id='wordplaceholder-r1' class='card-deck'></div>");
             $('#wordplaceholder').append("<div id='wordplaceholder-r2' class='card-deck'></div>");
-                       
             
             var dataContainer = $('#demodisplay');
 
-            $('#paginationplaceholder').pagination({                
-                dataSource: wordData,
-                pageSize: 6,
-                callback: function (data, pagination) {                    
-                    DisplayWords(data);
-                }
-            });
+            var wordData = [];
+
+            $.getJSON("http://localhost:57882/api/grewords", function (data) {
+
+                //data.forEach((val, i) => {
+                //    wordData.push(val);
+                //});
+                $.each(data, function (key, val) {
+                    wordData.push(val);
+                });
+            })
+                .done(function () {
+                    console.log("second success");
+                    var count = wordData.count;
+
+                    $('#paginationplaceholder').pagination({
+                        dataSource: wordData,
+                        pageSize: 6,
+                        callback: function (data, pagination) {
+                            DisplayWords(data);
+                        }
+                    });
+                })
+                .fail(function () {
+                    console.log("error");
+                })
+                .always(function () {
+                    console.log("finished");
+                });
+
+            
 
             function DisplayWords(wordsToDisplay) {
                 $('#wordplaceholder-r1').empty();
@@ -113,13 +142,13 @@
 
                 wordsToDisplay.forEach((w, i) => {
 
-                    var cardTemplate = "<div class='card text-white bg-dark mb-3'>" +
+                    var cardTemplate = "<div class='card text-white bg-dark'>" +
                         "<div class='card-body'>" +
                         "<div class='cardfront'>" +
                         "<center><h5 class='card-title'>" + w.word + "</h5></center>" +
                         "</div>" +
                         "<div class='cardback'>" +
-                        "<center><h5 class='card-title'>" + w.def + "</h5></center>" +
+                        "<center><h5 class='card-title'>" + w.definition + "</h5></center>" +
                         "</div>" +
                         "</div>" +
                         "</div>";
