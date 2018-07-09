@@ -34,11 +34,23 @@
         }
     </style>
     
+    <style>
+        /*Heading*/
+        .ml12 {            
+            font-size: 1.0em;            
+            letter-spacing: 0.5em;
+        }
+
+            .ml12 .letter {
+                display: inline-block;
+                line-height: 1em;
+            }
+    </style>
 </head>
 <body>
     <!-- Main Nav Bar-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Simple GRE</a>
+        <a class="navbar-brand ml12" href="#">SIMPLE GRE</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -96,10 +108,10 @@
         <div id="paginationbuttons">
             <button id="paginationprev" class="btn"><i class="fas fa-arrow-left"></i></button>
             <button id="paginationnext" class="btn"><i class="fas fa-arrow-right"></i></button>
-        </div> 
+        </div>
         <div id="paginationplaceholder"></div>
 
-    </div>        
+    </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -109,9 +121,33 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.3/pagination.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
 
     <script>
+
         
+        // Animation start
+        //***************************************************
+        $('.ml12').each(function () {
+            $(this).html($(this).text().replace(/([^\x00-\x80]|\w)/g, "<span class='letter'>$&</span>"));
+        });
+
+        anime.timeline({ loop: false })
+            .add({
+                targets: '.ml12 .letter',
+                translateX: [40, 0],
+                translateZ: 0,
+                opacity: [0, 1],
+                easing: "easeOutExpo",
+                elasticity: 200,                
+                duration: 2000,
+                delay: function (el, i) {
+                    return 500 + 30 * i;
+                }
+            });
+        // Animation End
+        //***************************************************
+
         $(function () {
 
             //var baseWebApiUrl = "http://localhost:57882/";
@@ -132,7 +168,7 @@
             });
 
             $('#alllist').click(function () {
-                LoadAll();                
+                LoadAll();
             });
 
             $('#mylist').click(function () {
@@ -156,10 +192,10 @@
             //{ word: "G", def: "GDEF" },
             //{ word: "H", def: "HDEF" },
             //{ word: "I", def: "IDEF" }];
-            
+
             $('#wordplaceholder').append("<div id='wordplaceholder-r1' class='card-deck'></div>");
             $('#wordplaceholder').append("<div id='wordplaceholder-r2' class='card-deck'></div>");
-            
+
             var dataContainer = $('#demodisplay');
 
             var wordData = [];
@@ -176,7 +212,7 @@
 
             function LoadPagination(url) {
                 wordData = [];
-                
+
                 $.getJSON(url, function (data) {
                     //data.forEach((val, i) => {
                     //    wordData.push(val);
