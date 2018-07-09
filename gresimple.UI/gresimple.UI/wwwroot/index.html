@@ -93,6 +93,10 @@
         <div id="wordplaceholder"></div>
         <br />
 
+        <div id="paginationbuttons">
+            <button id="paginationprev" class="btn"><i class="fas fa-arrow-left"></i></button>
+            <button id="paginationnext" class="btn"><i class="fas fa-arrow-right"></i></button>
+        </div> 
         <div id="paginationplaceholder"></div>
 
     </div>        
@@ -113,8 +117,14 @@
             //var baseWebApiUrl = "http://localhost:57882/";
             var baseWebApiUrl = "https://gresimplewebapi.azurewebsites.net/";
 
+            var paginationControl = $('#paginationplaceholder');
+
             $(document).ajaxStart(function () {
                 $("#greloader").css("display", "block");
+            });
+
+            $(document).ajaxError(function () {
+                console.log("Error retrieving data from ajax request")
             });
 
             $(document).ajaxComplete(function () {
@@ -127,7 +137,15 @@
 
             $('#mylist').click(function () {
                 LoadFrankenstein();
-            });            
+            });
+
+            $("#paginationprev").click(function () {
+                paginationControl.pagination('previous');
+            });
+
+            $("#paginationnext").click(function () {
+                paginationControl.pagination('next');
+            });
 
             //wordData = [{ word: "A", def: "ADEF" },
             //{ word: "B", def: "BDEF" },
@@ -171,7 +189,7 @@
                         console.log("second success");
                         var count = wordData.count;
 
-                        $('#paginationplaceholder').pagination({
+                        paginationControl.pagination({
                             dataSource: wordData,
                             pageSize: 6,
                             className: 'paginationjs-big',
