@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\" />
+    <None Include="wwwroot\css\loaders.css" />
   </ItemGroup>
 
   <ItemGroup>
